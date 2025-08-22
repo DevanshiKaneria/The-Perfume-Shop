@@ -1,34 +1,30 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:20.10.24'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     stages {
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/DevanshiKaneria/The-Perfume-Shop',
-                    credentialsId: 'github-token'
+                git branch: 'main', url: 'https://github.com/DevanshiKaneria/The-Perfume-Shop.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t perfume-site:latest .'
+                script {
+                    sh 'docker build -t perfume-shop .'
+                }
             }
         }
 
         stage('Run Container') {
             steps {
-                // Stop old container if exists, then run new one
-                sh '''
-                    docker stop perfume-site || true
-                    docker rm perfume-site || true
-                    docker run -d -p 8080:80 --name perfume-site perfume-site:latest
-                '''
+                script {
+                    // Stop old container if running
+                    sh 'docker rm -f perfume-shop || true'
+                    
+                    // Run new container
+                    sh 'docker run -d -p 8081:80 --name perfume-shop perfume-shop'
+                }
             }
         }
     }
