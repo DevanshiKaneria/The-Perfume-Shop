@@ -21,7 +21,7 @@ pipeline {
                 sh 'docker stop perfume-container || true'
                 sh 'docker rm perfume-container || true'
                 // Deploying the website to port 8081
-                sh "docker run -d -p 8081:80 --name perfume-container perfume-website:${env.BUILD_ID}"
+                sh "docker run -d -p 8088:80 --name perfume-container perfume-website:${env.BUILD_ID}"
             }
         }
     }
