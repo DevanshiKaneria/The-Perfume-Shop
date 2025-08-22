@@ -20,10 +20,10 @@ pipeline {
             steps {
                 script {
                     // Stop old container if running
-                    sh 'docker rm -f perfume-shop || true'
-                    
-                    // Run new container
-                    sh 'docker run -d -p 8081:80 --name perfume-shop perfume-shop'
+                    sh 'docker rm -f perfume-container || true'
+
+                    // Run new one
+                    sh 'docker run -d -p 8081:80 --name perfume-container perfume-shop'
                 }
             }
         }
