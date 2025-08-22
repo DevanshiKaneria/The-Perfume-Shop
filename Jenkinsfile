@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'docker stop perfume-container || true'
                 sh 'docker rm perfume-container || true'
-                sh "docker run -d -p 8080:80 --name perfume-container perfume-website:${env.BUILD_ID}"
+                sh "docker run -d -p 8088:80 --name perfume-container perfume-website:${env.BUILD_ID}"
             }
         }
     }
