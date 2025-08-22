@@ -1,11 +1,9 @@
-FROM jenkins/jenkins:lts
+# Use a lightweight NGINX web server
+FROM nginx:alpine
 
-USER root
+# Copy all your website files from the current folder
+# to the web server's root directory in the container.
+COPY . /usr/share/nginx/html
 
-# Install Docker CLI inside Jenkins container
-RUN apt-get update && \
-    apt-get install -y docker.io && \
-    rm -rf /var/lib/apt/lists/*
-
-# Switch back to Jenkins user
-USER jenkins
+# Expose port 80 for web traffic
+EXPOSE 80
